@@ -3,6 +3,7 @@
  */
 import { loadArchetipi } from './modules/maschere.js';
 import { createArchetipi } from './modules/archetipi.js';
+import { initInfo } from './modules/info.js';
 
 /**
  * API pubblica
@@ -50,4 +51,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     elements.forEach((el, index) => callback(el, index));
   };
+
+  /**
+   * Initialize multiple functions sequentially
+   * @param {Function[]} functions - Array of functions to execute
+   */
+  function initCode(functions) {
+    functions.forEach(fn => {
+      try { fn(); } catch (e) { console.warn('[QPC] Init error in', fn.name || 'anonymous', e); }
+    });
+  }
+
+  initCode([initInfo]);
 });

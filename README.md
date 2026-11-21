@@ -2,6 +2,7 @@
 
 I 24 archetipi di Quarto Piano come stati di una sola griglia modulare.
 Non si animano le forme: si anima la griglia, e le forme ci emergono dentro.
+Tra un archetipo e l'altro la griglia fa morphing: le celle in comune restano accese, le altre si spengono o si accendono, e colore e fondo sfumano verso il nuovo archetipo.
 
 **Demo su CodePen:** https://codepen.io/qpcmos/pen/ogWWwbz
 
@@ -64,8 +65,9 @@ archetipi.index;
 src/
   index.html       template unico della pagina
   archetipi/       SVG + index.json (nome, famiglia, fondo)
-  js/app.js        entry: API window.QPC + helper mos()
-  js/modules/      maschere.js (SVG → maschere), archetipi.js (canvas + regia)
+  js/app.js        entry: API window.QPC + helper mos() + initCode()
+  js/modules/      maschere.js (SVG → maschere), archetipi.js (canvas + regia),
+                   info.js (icona info + modale con il link al repo, facoltativa)
   scss/style.scss
 dist/              build del sito (generata, non nel repo)
 codepen/           build per CodePen (generata, non nel repo)
