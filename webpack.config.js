@@ -10,14 +10,33 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 
-// su CodePen gli SVG arrivano dal repo GitHub via jsDelivr
+// su CodePen gli SVG arrivano dal repo GitHub via jsDelivr, gsap dalla CDN
 const CDN_DIR = 'https://cdn.jsdelivr.net/gh/quartopianodesign/qpc-archetipi@main/src/archetipi/';
+const CDN_SCRIPTS = ['https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js'];
 
-// src/index.html è l'unico template: da qui escono dist/index.html e il markup per CodePen
+// src/index.html è l'unico template: da qui escono dist/index.html e codepen/index.html
 const template = './src/index.html';
-const bodyOf = file => fs.readFileSync(file, 'utf8')
-  .match(/<body>\n*([\s\S]*?)\s*<\/body>/)[1]
-  .replace(/^ {2}/gm, '') + '\n';
+
+// codepen/index.html: documento completo per CodePen 2.0 (style.css, CDN, markup, script.js)
+const penDocument = () => {
+  const src = fs.readFileSync(template, 'utf8');
+  const title = src.match(/<title>(.*)<\/title>/)[1];
+  const body = src.match(/<body>\n*([\s\S]*?)\s*<\/body>/)[1]
+    .replace(/^ {2}/gm, '')
+    .replace("dir: 'archetipi/'", `dir: '${CDN_DIR}'`)
+    .split('\n').map(line => '  ' + line).join('\n');
+  const scripts = CDN_SCRIPTS.map(url => `  <script src="${url}"></script>\n`).join('');
+
+  return '<!doctype html>\n<html lang="it">\n<head>\n'
+    + '  <meta charset="utf-8">\n'
+    + '  <meta name="viewport" content="width=device-width, initial-scale=1">\n'
+    + `  <title>${title}</title>\n`
+    + '  <link rel="stylesheet" href="./style.css">\n'
+    + scripts
+    + '</head>\n<body>\n\n'
+    + body
+    + '\n\n  <script src="./script.js"></script>\n</body>\n</html>\n';
+};
 
 // build del sito: dist/index.html + app.min.js + app.min.css + archetipi/, gsap incluso
 const site = {
@@ -51,7 +70,7 @@ const site = {
   ],
 };
 
-// build per CodePen: markup + script leggibile, gsap dalla CDN del pen
+// build per CodePen: i 3 file del pen, leggibili (index.html completo, script.js, style.css)
 // (style.css lo compila sass dopo webpack, vedi "build" in package.json)
 const codepen = {
   name: 'codepen',
@@ -65,7 +84,7 @@ const codepen = {
   optimization: { minimize: false },
   plugins: [
     new HtmlWebpackPlugin({
-      templateContent: () => bodyOf(template).replace("dir: 'archetipi/'", `dir: '${CDN_DIR}'`),
+      templateContent: penDocument,
       inject: false,
       minify: false,
     }),

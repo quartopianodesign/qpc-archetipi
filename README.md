@@ -28,7 +28,7 @@ Tra un archetipo e l'altro la griglia fa morphing: le celle in comune restano ac
 </script>
 ```
 
-`DOMContentLoaded` serve su CodePen: il pannello HTML viene eseguito prima del pannello JS, quindi `QPC` non esiste ancora.
+`DOMContentLoaded` serve perché lo script inline viene letto prima dello script dell'utility (in `dist/` è `defer`, su CodePen `script.js` sta in fondo): così la chiamata parte quando `QPC` esiste già.
 
 La cartella contiene gli SVG e un `index.json`:
 
@@ -85,14 +85,15 @@ npm run build   # dist/ (minificato, gsap incluso) + codepen/ (leggibile, gsap d
 
 `dist/` e `codepen/` non sono nel repo: si generano con `npm install && npm run build`.
 
-| Pannello | File |
-| --- | --- |
-| HTML | `codepen/index.html` |
-| CSS | `codepen/style.css` (oppure `src/scss/style.scss` con preprocessore SCSS) |
-| JS | `codepen/script.js` |
-| External script | `https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js` |
+`codepen/` contiene i tre file del pen, pronti per CodePen 2.0 o per essere copiati così come sono:
 
-Su CodePen gli SVG arrivano da questo repo via jsDelivr (`dir` nello script di `codepen/index.html`).
+| File | Contenuto |
+| --- | --- |
+| `index.html` | documento completo: `style.css`, gsap dalla CDN, markup, chiamata all'API, `script.js` |
+| `style.css` | CSS leggibile, compilato da `src/scss/style.scss` |
+| `script.js` | JS leggibile, senza runtime di webpack |
+
+Su CodePen gli SVG arrivano da questo repo via jsDelivr (`dir` nello script di `index.html`).
 
 ## Licenza
 
