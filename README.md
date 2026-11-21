@@ -3,6 +3,8 @@
 I 24 archetipi di Quarto Piano come stati di una sola griglia modulare.
 Non si animano le forme: si anima la griglia, e le forme ci emergono dentro.
 
+**Demo su CodePen:** https://codepen.io/qpcmos/pen/ogWWwbz
+
 - **Click / rotella / frecce / spazio**: archetipo successivo (shift+click per tornare indietro)
 - **Nastro in basso**: salta a un archetipo
 - **Cursore sopra la forma**: i moduli sotto la mano rientrano
@@ -65,8 +67,8 @@ src/
   js/app.js        entry: API window.QPC + helper mos()
   js/modules/      maschere.js (SVG → maschere), archetipi.js (canvas + regia)
   scss/style.scss
-dist/              build del sito: index.html, app.min.js, app.min.css, archetipi/
-codepen/           build per CodePen: index.html, style.css, script.js (leggibili)
+dist/              build del sito (generata, non nel repo)
+codepen/           build per CodePen (generata, non nel repo)
 ```
 
 ## Comandi
@@ -78,6 +80,8 @@ npm run build   # dist/ (minificato, gsap incluso) + codepen/ (leggibile, gsap d
 ```
 
 ## CodePen
+
+`dist/` e `codepen/` non sono nel repo: si generano con `npm install && npm run build`.
 
 | Pannello | File |
 | --- | --- |
