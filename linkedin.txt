@@ -1,0 +1,35 @@
+𝗤𝗣𝗖 𝗔𝗿𝗰𝗵𝗲𝘁𝗶𝗽𝗶: 𝟮𝟰 𝗳𝗼𝗿𝗺𝗲, 𝘂𝗻𝗮 𝘀𝗼𝗹𝗮 𝗴𝗿𝗶𝗴𝗹𝗶𝗮 🟪
+
+In Quarto Piano recentemente abbiamo fatto un rebranding visto che proprio questo 2026 QPC ha compiuto 10 anni.
+Tra i vari elementi del rebranding sono stati disegnati 24 archetipi in formato .svg (probabilmente in un prossimo post pubblicherò/pubblicheremo qualcosa sul lavoro fatto), piccole forme pixel nate tutte dalla stessa griglia 8×8 che verranno utilizzati in vari contesti comunicativi.
+
+Tempo fa avevo scritto un esperimento per mostrarli tutti senza animare le forme una per una: animo la griglia, e le forme ci emergono dentro. In questi giorni l'ho ripreso in mano, l'ho ripulito e l'ho pubblicato su CodePen.
+
+𝗖𝗼𝗺𝗲 𝗳𝘂𝗻𝘇𝗶𝗼𝗻𝗮
+
+▸ Il campo è un canvas da 72×72 celle. Ogni cella è un oggettino { v } che GSAP porta da 0 a 1: sono più di 5.000 animazioni in parallelo, e il browser non fa una piega.
+▸ Il cambio di forma usa lo stagger "grid" di GSAP: l'onda parte dal punto in cui sta il mouse, e ogni modulo entra ruotando di 45°, l'unico angolo che il sistema conosce.
+▸ Se passate il cursore sopra la forma, i moduli sotto la mano rientrano: stessa curva, stessi tempi, solo più piano.
+▸ Click, rotella, frecce o il nastro colorato in basso per cambiare archetipo. Se lo lasciate stare, riparte da solo.
+
+𝗟𝗮 𝗽𝗮𝗿𝘁𝗲 𝗰𝗵𝗲 𝗺𝗶 𝗵𝗮 𝗱𝗮𝘁𝗼 𝗽𝗶𝘂̀ 𝘀𝗼𝗱𝗱𝗶𝘀𝗳𝗮𝘇𝗶𝗼𝗻𝗲
+
+La vecchia versione caricava gli SVG via fetch, li disegnava su un canvas in supersampling e poi misurava il bounding box pixel per pixel, perché le forme non erano allineate al viewBox. Funzionava, ma c'era parecchia matematica per correggere errori di arrotondamento.
+
+Nel frattempo gli SVG sono stati ridisegnati su moduli da 16px esatti. Quindi adesso: Path2D, un fill su un canvas 72×72, e leggo l'alpha di ogni pixel. Fine. Niente supersampling, niente bounding box, e il loader è passato da circa 230 righe a una settantina.
+
+E 72 non è un numero a caso: è il più piccolo divisibile sia per 8 sia per 9, così ogni bordo di modulo cade esattamente sul confine di una cella, anche per Il Compasso.
+
+𝗟𝗼 𝘀𝘁𝗮𝗰𝗸
+
+ES6 modules + SCSS, compilati con Webpack. Dalla stessa sorgente escono due build: una minificata per il sito e una leggibile per CodePen, che prende GSAP dalla CDN e gli SVG direttamente dal repo GitHub via jsDelivr.
+
+E se volete provarlo con le vostre forme, basta una cartella di SVG con un index.json:
+QPC.loadArchetipi({ dir: 'la-mia-cartella/' }).then(QPC.archetipi)
+
+👉 𝗦𝘂 𝗖𝗼𝗱𝗲𝗣𝗲𝗻: https://codepen.io/qpcmos/pen/XXXXXXX
+💾 𝗜𝗹 𝗰𝗼𝗱𝗶𝗰𝗲 𝘀𝘂 𝗚𝗶𝘁𝗛𝘂𝗯: https://github.com/quartopianodesign/qpc-archetipi
+
+Se ci giocate e trovate qualcosa di storto, ditemelo: è un laboratorio, è fatto apposta per rompersi un po' 🙂
+
+#creativecoding #javascript #gsap #canvas #webdesign #frontend #codepen #generativedesign #brandidentity

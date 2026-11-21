@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QPC Archetipi</title>
+<script defer src="app.min.js"></script><link href="app.min.css" rel="stylesheet"></head>
+<body>
+
+  <div class="qpc-archetipi">
+    <canvas class="qpc-archetipi__stage"></canvas>
+    <nav class="qpc-archetipi__ribbon" aria-label="Archetipi QPC"></nav>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      QPC.loadArchetipi({ dir: 'archetipi/', n: 72 })  
+        .then(QPC.archetipi)
+        .catch(console.error);
+    });
+  </script>
+
+</body>
+</html>

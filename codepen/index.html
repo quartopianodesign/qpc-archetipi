@@ -1,0 +1,12 @@
+<div class="qpc-archetipi">
+  <canvas class="qpc-archetipi__stage"></canvas>
+  <nav class="qpc-archetipi__ribbon" aria-label="Archetipi QPC"></nav>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    QPC.loadArchetipi({ dir: 'https://cdn.jsdelivr.net/gh/quartopianodesign/qpc-archetipi@main/src/archetipi/', n: 72 })  
+      .then(QPC.archetipi)
+      .catch(console.error);
+  });
+</script>

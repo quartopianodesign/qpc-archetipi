@@ -1,0 +1,70 @@
+// QPC Archetipi
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.qpc-archetipi {
+  --ground: #0e0d12;
+  --soft: #edecf2;
+
+  position: fixed;
+  inset: 0;
+  background: var(--ground);
+
+  &__stage {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+  }
+
+  // nastro palette: un tasto per archetipo
+  &__ribbon {
+    position: absolute;
+    inset: auto 0 0;
+    display: flex;
+    align-items: flex-end;
+    pointer-events: none;
+  }
+
+  &__tick {
+    flex: 1;
+    height: .5rem;
+    padding: 0;
+    border: 0;
+    background: var(--c);
+    opacity: .34;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: height .3s cubic-bezier(.2, .8, .2, 1), opacity .3s;
+
+    &:hover {
+      height: 1.1rem;
+      opacity: .8;
+    }
+
+    &[aria-current="true"] {
+      height: 2.5rem;
+      opacity: 1;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--soft);
+      outline-offset: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) { transition: none; }
+  }
+}
